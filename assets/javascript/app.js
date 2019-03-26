@@ -108,13 +108,12 @@ function makeCard(name, image, tags, emotions, path) {
     var span = $("<span>");
     var img = $("<img>");
     img.attr("src", image);
+    img.data("image", image);
+    img.data("emotions", emotions);
     var title = $("<span>");
     title.addClass("card-title");
     for (var i = 0; i < tags.length; i++) {
         var chip = $(`<div class="chip">#${tags[i]}</div>`);
-
-        chip.data("image", image);
-        chip.data("emotions", emotions);
         title.append(chip);
     }
     span.append(img, title);
@@ -265,10 +264,10 @@ ref.on("child_added", function (snapshot) {
 });
 
 // Click on a toast to bring back the saved image
-$("body").on("click", ".chip", function () {
-    $("#favorite").attr("style", "display:none");
-    faceHtml($(this).data("image"), $(this).data("emotions"));
-    tasteDive(highest($(this).data("emotions")));
+$("body").on("click", ".collapsible-body img", function () {
+  $("#favorite").attr("style", "display:none");
+  faceHtml($(this).data("image"), $(this).data("emotions"));
+  tasteDive(highest($(this).data("emotions")));
 });
 
 function tasteDive(emotion) {
